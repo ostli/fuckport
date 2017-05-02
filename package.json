@@ -1,0 +1,27 @@
+{
+  "name": "fuckport",
+  "version": "1.0.0",
+  "description": "处理关于端口的诸多相关！",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uv-w/fuckport.git"
+  },
+  "author": "uv-w",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uv-w/fuckport/issues"
+  },
+  "homepage": "https://github.com/uv-w/fuckport#readme",
+  "dependencies": {
+    "cli-color": "^1.2.0",
+    "execa": "^0.6.3",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "mocha": "^3.3.0"
+  }
+}
