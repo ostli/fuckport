@@ -1,7 +1,10 @@
-# fuckport [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](https://github.com/uv-w/fuckport)
+# fuckport [![PyPI](https://img.shields.io/pypi/status/Django.svg?style=plastic)](https://github.com/uv-w/fuckport)
 获取可用端口、杀端口等常用操作！
 
-[![NPM version](https://badge.fury.io/js/badge-list.svg)](https://github.com/uv-w/fuckport)
+[![travis](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://github.com/uv-w/fuckport)
+[![NPM version](https://badge.fury.io/js/badge-list.svg)](https://www.npmjs.com/package/fuckport)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/fuckport/Lobby)  [![language](https://img.shields.io/badge/language-node-blue.svg)](https://img.shields.io/badge/language-swift-orange.svg)
+[![Packagist](https://img.shields.io/packagist/dm/doctrine/orm.svg)](https://www.npmjs.com/package/fuckport)
 
 ## Rationale
 
