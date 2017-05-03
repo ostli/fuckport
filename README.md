@@ -8,6 +8,8 @@
 * `lsof -i :<port>` for Unix
 * `netstat -ano|findstr "<port>"` for Windows
 ## Installation
+fuckport requires node v7.6.0 or higher for ES2015 and async function support.
+
 	$ npm i --save fuckport
 
 ## Usage
@@ -36,3 +38,8 @@ funckport.getPortsPids([8080, 8089, 3000]]).then(pids => console.log(pids))
 funckport.killPorts([8080, 8089, 3000]]).then(pids => console.log(pids))
 //=>eg: [ -1, -1, 536 ]
 ```
+## Test
+  $ npm run test
+
+## License
+LGPL

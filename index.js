@@ -49,7 +49,7 @@ const parseStdout = (stdout) => {
  **/
 const getPort = (port, must) => {
   if(must === true){
-    return killPorts(port).then(result => port)
+    return killPorts(port).then(pid => port).catch(err => err)
   }else{
     return getRandomPort(port).catch(() => getRandomPort())
   }
@@ -99,14 +99,6 @@ const getPortsPids = (ports) => {
   }
 }
 
- // getPortsPids([3000, 4000, '22', 3001, 54321]).then((result) => {
- //   log(result)
- // }).catch(err => log(err))
-
- // killPorts([54321, 4000, '-22', 3001]).then((result) => {
- //   log(result)
- // }).catch(err => log(err))
-//getPort(33445).then(port => log(port)).catch(err => log(err))
 module.exports  = {
   getPort
   ,killPorts
