@@ -3,11 +3,11 @@
 
 [![travis](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://github.com/uv-w/fuckport)
 [![NPM version](https://badge.fury.io/js/badge-list.svg)](https://www.npmjs.com/package/fuckport)
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/fuckport/Lobby)  [![language](https://img.shields.io/badge/language-node-blue.svg)](https://img.shields.io/badge/language-swift-orange.svg)
-[![GitHub issues](https://img.shields.io/github/issues/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/issues)
-[![GitHub forks](https://img.shields.io/github/forks/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/network)
-[![GitHub stars](https://img.shields.io/github/stars/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/uv-w/fuckport/master/LICENSE)
+[![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/fuckport/Lobby)  [![language](https://img.shields.io/badge/language-node-blue.svg)](https://img.shields.io/badge/language-swift-orange.svg)
+[![issues](https://img.shields.io/github/issues/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/issues)
+[![forks](https://img.shields.io/github/forks/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/network)
+[![stars](https://img.shields.io/github/stars/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/stargazers)
+[![license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/uv-w/fuckport/master/LICENSE)
 ## Rationale
 
 * `lsof -i :<port>` for Unix
