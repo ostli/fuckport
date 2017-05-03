@@ -4,7 +4,7 @@
  **/
 const net = require('net')
 const utils = require('./utils')
-const log = console.log;
+const log = console.log
 
 //获取一个随机的可用端口
 const getRandomPort = (port) => new Promise((resolve, reject) => {
@@ -106,7 +106,7 @@ const getPortsPids = (ports) => {
  // killPorts([54321, 4000, '-22', 3001]).then((result) => {
  //   log(result)
  // }).catch(err => log(err))
-getPort(33445).then(port => log(port)).catch(err => log(err))
+//getPort(33445).then(port => log(port)).catch(err => log(err))
 module.exports  = {
   getPort
   ,killPorts
