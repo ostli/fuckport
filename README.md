@@ -2,7 +2,7 @@
 获取可用端口、杀端口等常用操作！
 
 [![travis](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://github.com/uv-w/fuckport)
-[![NPM version](https://badge.fury.io/js/badge-list.svg)](https://www.npmjs.com/package/fuckport)
+[![npm version](https://badge.fury.io/js/fuckport.svg)](https://badge.fury.io/js/fuckport)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/fuckport/Lobby)  [![language](https://img.shields.io/badge/language-node-blue.svg)](https://img.shields.io/badge/language-swift-orange.svg)
 [![issues](https://img.shields.io/github/issues/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/issues)
 [![forks](https://img.shields.io/github/forks/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/network)
@@ -11,8 +11,16 @@
 
 ## Rationale
 
-* `lsof -i :<port>` for Unix
-* `netstat -ano|findstr "<port>"` for Windows
+* List port info :  
+
+	$ `lsof -i :<port>` for Unix  
+	$ `netstat -ano|findstr "<port>"` for Windows
+
+* Kill pid :  
+
+  $ `kill -9 <pid>` for Unix  
+	$ `taskkill /F /pid "<pid>"` for Windows
+
 
 ## Installation
 
@@ -46,10 +54,10 @@ funckport.killPorts([8080, 8089, 3000]]).then(pids => console.log(pids))
 //=>eg: [ -1, -1, 536 ]
 ```
 ## Test
-	$ npm run test
+	$ npm test
 
 ## Commit
-	$ npm run commit 'npm publish and git commit'
+	$ npm run commit 'a test commit msg'
 
 ## License
 LGPL

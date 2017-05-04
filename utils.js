@@ -13,4 +13,8 @@ module.exports = {
   ,is_window: process.platform == 'win32'
   ,validate_port: port => /^(0|[1-9]\d*)$/.test(port) && port <= 65535
   ,build_port_msg: port => 'Param ' + port + ' is not a valid port!'
+  ,log: (msg, type) => console.log(cli_color[ type == 'error'
+                                                    ? 'red'
+                                                    : 'blue' ](msg))
+
 }

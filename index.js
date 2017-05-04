@@ -13,8 +13,8 @@ const getRandomPort = (port) => new Promise((resolve, reject) => {
     server.unref()
     .on('error', reject)
     .listen(port || 0, () => {
-  		const _port = server.address().port;
-  		server.close(() => resolve(_port));
+  		const _port = server.address().port
+  		server.close(() => resolve(_port))
   	});
   } catch (e) {
     return reject(e)
@@ -24,7 +24,7 @@ const getRandomPort = (port) => new Promise((resolve, reject) => {
 
 //处理命令返回信息
 const parseStdout = (stdout) => {
-  let pid = -1;
+  let pid = -1
   if(!stdout.failed){
     stdout = stdout.stdout.split('\n')
     stdout
@@ -35,11 +35,9 @@ const parseStdout = (stdout) => {
       } else {//Mac平台一般第2位是PID
         pid = line[0] == 'node' ? line[1] : ''
       }
-      //组织所需要的数据结构
-      //pid && !~pids.indexOf(pid) && pids.push(Number(pid))
     })
   }
-  return Number(pid);
+  return Number(pid)
 }
 
 /**
@@ -49,6 +47,9 @@ const parseStdout = (stdout) => {
  **/
 const getPort = (port, must) => {
   if(must === true){
+    if(!utils.validate_port(port)){
+      return Promise.reject(utils.build_port_msg(port))
+    }
     return killPorts(port).then(pid => port).catch(err => err)
   }else{
     return getRandomPort(port).catch(() => getRandomPort())
@@ -62,10 +63,10 @@ const killPorts = (ports) => {
       pids.forEach( pid => {
         pid > 0 ? process.kill(pid) : ''
       })
-      return Promise.resolve(pids);
+      return Promise.resolve(pids)
     })
     .catch(err => {
-      throw err;
+      throw err
     })
 
   } catch (e) {
