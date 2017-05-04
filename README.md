@@ -57,7 +57,7 @@ funckport.killPorts([8080, 8089, 3000]]).then(pids => console.log(pids))
 	$ npm test
 
 ## Commit
-	$ npm run commit 'a test commit msg'
+	$ npm run commit 'a test commit msg' && git push
 
 ## License
 LGPL

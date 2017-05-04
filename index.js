@@ -4,7 +4,6 @@
  **/
 const net = require('net')
 const utils = require('./utils')
-const log = console.log
 
 //获取一个随机的可用端口
 const getRandomPort = (port) => new Promise((resolve, reject) => {
@@ -17,7 +16,7 @@ const getRandomPort = (port) => new Promise((resolve, reject) => {
   		server.close(() => resolve(_port))
   	});
   } catch (e) {
-    return reject(e)
+    reject(e)
   }
 
 });
@@ -26,18 +25,59 @@ const getRandomPort = (port) => new Promise((resolve, reject) => {
 const parseStdout = (stdout) => {
   let pid = -1
   if(!stdout.failed){
-    stdout = stdout.stdout.split('\n')
-    stdout
-    .forEach(function (line) {
-      line = line.trim().split(/\s+/);//通过空格截取每个标志字符
-      if (utils.is_window) {//windows平台通常的PID所处位置是第5位
-        pid = line && line[2] && !~line[2].indexOf(':' + _port) ? line[4] : ''
-      } else {//Mac平台一般第2位是PID
-        pid = line[0] == 'node' ? line[1] : ''
-      }
-    })
+    if(utils.is_window){
+      stdout = stdout.stdout.split('\n')
+      stdout
+      .forEach(function (line) {
+        line = line.trim().split(/\s+/);//通过空格截取每个标志字符
+        //pid = line && line[2] && !~line[2].indexOf(':' + _port) ? line[4] : ''
+        pid = line ? line[4] : ''
+      })
+    }else{
+      pid = stdout.stdout || -1
+    }
   }
   return Number(pid)
+}
+
+//
+const getPortsPids = (ports) => {
+  ports = utils._.isArray(ports) ? ports : [ ports ]
+  let checkPromiseArr = []
+  ports.forEach((port) => {
+    if(utils.validate_port(port)){
+      let command = utils.is_window
+                    ? 'netstat -ano | findstr ":' + port + '" | findstr "LISTENING"'
+                    : 'lsof -i:' + port + ' | grep LISTEN | awk \'{print $2}\''
+
+      checkPromiseArr.push(utils.execa.shell(command))
+    }else{
+      checkPromiseArr.push(Promise.resolve(-1))
+    }
+  })
+  return Promise.all(checkPromiseArr)
+                .then(result => {
+                  return result.map( _result => parseStdout(_result))
+                })
+
+}
+
+const killPorts = (ports) => {
+  try {
+    return getPortsPids(ports)
+    .then(pids => {
+      pids.forEach( pid => {
+        pid > 0 ? process.kill(pid) : ''
+      })
+      return Promise.resolve(pids)
+    })
+    .catch(err => {
+      throw err
+    })
+
+  } catch (e) {
+    return Promise.reject(e)
+  }
 }
 
 /**
@@ -56,49 +96,10 @@ const getPort = (port, must) => {
   }
 }
 
-const killPorts = (ports) => {
-  try {
-    return getPortsPids(ports)
-    .then(pids => {
-      pids.forEach( pid => {
-        pid > 0 ? process.kill(pid) : ''
-      })
-      return Promise.resolve(pids)
-    })
-    .catch(err => {
-      throw err
-    })
-
-  } catch (e) {
-    return Promise.reject('[error]: ' + e)
-  }
-}
-
-const getPortsPids = (ports) => {
-  try {
-    ports = utils._.isArray(ports) ? ports : [ ports ]
-    let checkPromiseArr = []
-    ports.forEach((port) => {
-      if(!utils.validate_port(port)){
-        throw  utils.build_port_msg(port)
-      }
-      let command = utils.is_window ? 'netstat -ano | findstr "' + port + '"' :
-                                      'lsof -i:' + port
-      checkPromiseArr.push(
-        new Promise((resolve, reject) => {
-          utils.execa.shell(command)
-          .then(result => resolve(result))
-          .catch(err => resolve(err))
-        })
-      )
-    })
-    return Promise.all(checkPromiseArr).then(result => {
-      return result.map( _result => parseStdout(_result))
-    })
-  } catch (e) {
-    return Promise.reject('[error]: ' + e)
-  }
-}
+//getPortsPids([3000, -1, 3001, 'ss', '3044']).then(pids => utils.log(pids))
+//getRandomPort(3000).then(port => utils.log(port)).catch(err => utils.log(err, 'error'))
+//getPort(3001, true).then(port => utils.log(port))
+//killPorts([3000, 3001]).then(pids => utils.log(pids))
 
 module.exports  = {
   getPort
