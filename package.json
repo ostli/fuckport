@@ -1,11 +1,11 @@
 {
   "name": "fuckport",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "处理关于端口的诸多相关！",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -t 5000"
-    ,"commit": "npm publish . && git add . && git commit -m "
+    "test": "mocha -t 5000",
+    "commit": "npm publish . && git add . && git commit -m "
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,6 @@
   "homepage": "https://github.com/uv-w/fuckport#readme",
   "dependencies": {
     "cli-color": "^1.2.0",
-    "execa": "^0.6.3",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

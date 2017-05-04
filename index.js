@@ -3,18 +3,39 @@
  * Created by uv-w on 2017/5/2.
  **/
 const net = require('net')
-const utils = require('./utils')
+const cli_color = require('cli-color')
+const _ = require('lodash')
+const exec = require('child_process').exec
+
+const utils = {
+  is_window: process.platform == 'win32'
+  ,validate_port: port => /^(0|[1-9]\d*)$/.test(port) && port <= 65535
+  ,build_port_msg: port => 'Param ' + port + ' is not a valid port!'
+  ,log: (msg, type) => console.log(cli_color[ type == 'error'
+                                                    ? 'red'
+                                                    : 'blue' ](msg))
+  ,exe_shell: (command) => {
+    return new Promise((resolve, reject) => {
+      exec(command, (err, stdout) => {
+        if(err){
+          return reject(err)
+        }
+        resolve(stdout)
+      })
+    })
+  }
+}
 
 //获取一个随机的可用端口
 const getRandomPort = (port) => new Promise((resolve, reject) => {
   try {
-  	const server = net.createServer()
+    const server = net.createServer()
     server.unref()
     .on('error', reject)
     .listen(port || 0, () => {
-  		const _port = server.address().port
-  		server.close(() => resolve(_port))
-  	});
+      const _port = server.address().port
+      server.close(() => resolve(_port))
+    });
   } catch (e) {
     reject(e)
   }
@@ -24,17 +45,17 @@ const getRandomPort = (port) => new Promise((resolve, reject) => {
 //处理命令返回信息
 const parseStdout = (stdout) => {
   let pid = -1
-  if(!stdout.failed){
+  if(stdout && stdout != -1){
     if(utils.is_window){
-      stdout = stdout.stdout.split('\n')
-      stdout
-      .forEach(function (line) {
+      stdout = String(stdout).split('\n')
+      stdout.forEach(function (line) {
         line = line.trim().split(/\s+/);//通过空格截取每个标志字符
-        //pid = line && line[2] && !~line[2].indexOf(':' + _port) ? line[4] : ''
-        pid = line ? line[4] : ''
+        if(line.length == 5){
+          pid = line[4]
+        }
       })
     }else{
-      pid = stdout.stdout || -1
+      pid = stdout || -1
     }
   }
   return Number(pid)
@@ -42,7 +63,7 @@ const parseStdout = (stdout) => {
 
 //
 const getPortsPids = (ports) => {
-  ports = utils._.isArray(ports) ? ports : [ ports ]
+  ports = _.isArray(ports) ? ports : [ ports ]
   let checkPromiseArr = []
   ports.forEach((port) => {
     if(utils.validate_port(port)){
@@ -50,15 +71,14 @@ const getPortsPids = (ports) => {
                     ? 'netstat -ano | findstr ":' + port + '" | findstr "LISTENING"'
                     : 'lsof -i:' + port + ' | grep LISTEN | awk \'{print $2}\''
 
-      checkPromiseArr.push(utils.execa.shell(command))
+      checkPromiseArr.push(utils.exe_shell(command).catch( err => -1))
     }else{
       checkPromiseArr.push(Promise.resolve(-1))
     }
   })
   return Promise.all(checkPromiseArr)
-                .then(result => {
-                  return result.map( _result => parseStdout(_result))
-                })
+                .then(result => result.map( _result => parseStdout(_result)))
+                .catch(err => err)
 
 }
 
@@ -96,9 +116,9 @@ const getPort = (port, must) => {
   }
 }
 
-//getPortsPids([3000, -1, 3001, 'ss', '3044']).then(pids => utils.log(pids))
-//getRandomPort(3000).then(port => utils.log(port)).catch(err => utils.log(err, 'error'))
-//getPort(3001, true).then(port => utils.log(port))
+//getPortsPids([3000, -1, 3001, 'ss', '3044']).then(pids => utils.log(pids, 'error'))
+//getRandomPort(30001).then(port => utils.log(port)).catch(err => utils.log(err, 'error'))
+//getPort(3000, true).then(port => utils.log(port))
 //killPorts([3000, 3001]).then(pids => utils.log(pids))
 
 module.exports  = {
