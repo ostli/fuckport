@@ -1,5 +1,8 @@
 # fuckport [![PyPI](https://img.shields.io/pypi/status/Django.svg?style=plastic)](https://github.com/uv-w/fuckport)
-获取可用端口、杀端口等常用操作！
+> Kill ports  
+> Get an available port  
+> Get ports's PIDS
+>Cross platform 
 
 [![travis](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://github.com/uv-w/fuckport)
 [![npm version](https://badge.fury.io/js/fuckport.svg)](https://badge.fury.io/js/fuckport)
