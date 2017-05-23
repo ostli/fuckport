@@ -2,9 +2,9 @@
 > Kill ports  
 > Get an available port  
 > Get ports's PIDS
->Cross platform 
+>Cross platform
 
-[![travis](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://github.com/uv-w/fuckport)
+[![Build Status](https://travis-ci.org/uv-w/fuckport.svg?branch=master)](https://travis-ci.org/uv-w/fuckport)
 [![npm version](https://badge.fury.io/js/fuckport.svg)](https://badge.fury.io/js/fuckport)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/fuckport/Lobby)  [![language](https://img.shields.io/badge/language-node-blue.svg)](https://img.shields.io/badge/language-swift-orange.svg)
 [![issues](https://img.shields.io/github/issues/uv-w/fuckport.svg)](https://github.com/uv-w/fuckport/issues)
