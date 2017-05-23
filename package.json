@@ -1,6 +1,6 @@
 {
   "name": "fuckport",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "处理关于端口的诸多相关！",
   "main": "index.js",
   "scripts": {
